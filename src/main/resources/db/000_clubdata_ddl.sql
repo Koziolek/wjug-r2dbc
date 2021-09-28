@@ -6,12 +6,6 @@ CREATE USER jpa with password 'jpa';
 GRANT ALL PRIVILEGES ON DATABASE postgres to r2dbc;
 GRANT ALL PRIVILEGES ON DATABASE postgres to jpa;
 
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO r2dbc;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO jpa;
-
-GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO r2dbc;
-GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO jpa;
-
 -- Dumped from database version 9.2.0
 -- Dumped by pg_dump version 9.2.0
 -- Started on 2013-05-19 16:05:10 BST
@@ -40,7 +34,7 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE facilities (
-    facid integer NOT NULL PRIMARY KEY,
+    facid SERIAL NOT NULL PRIMARY KEY,
     name character varying(100) NOT NULL,
     membercost numeric NOT NULL,
     guestcost numeric NOT NULL,
@@ -55,7 +49,7 @@ CREATE TABLE facilities (
 --
 
 CREATE TABLE members (
-    memid integer NOT NULL PRIMARY KEY,
+    memid SERIAL NOT NULL PRIMARY KEY,
     surname character varying(200) NOT NULL,
     firstname character varying(200) NOT NULL,
     address character varying(300) NOT NULL,
@@ -67,7 +61,7 @@ CREATE TABLE members (
 );
 
 CREATE TABLE bookings (
-    bookid integer NOT NULL PRIMARY KEY,
+    bookid SERIAL NOT NULL PRIMARY KEY,
     facid integer NOT NULL,
     memid integer NOT NULL,
     starttime timestamp without time zone NOT NULL,
@@ -112,3 +106,9 @@ CREATE INDEX "members.recommendedby"
   ON members
   USING btree
   (recommendedby);
+
+
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO r2dbc;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO jpa;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO r2dbc;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO jpa;

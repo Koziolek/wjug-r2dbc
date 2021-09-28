@@ -10,4 +10,8 @@ services:
     environment:
       POSTGRES_PASSWORD: 'asdf'
     volumes:
-      - ./src/main/resources/db/:/docker-entrypoint-initdb.d/
+      - ./src/main/resources/db/000_clubdata_ddl.sql:/docker-entrypoint-initdb.d/000_clubdata_ddl.sql
+      - ./src/main/resources/db/001_clubdata_data.sql:/docker-entrypoint-initdb.d/001_clubdata_data.sql
+
+volumes:
+  src:

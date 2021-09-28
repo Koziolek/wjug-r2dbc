@@ -21,7 +21,7 @@ import lombok.Setter;
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "memid")
     private int memId;
 

@@ -7,6 +7,7 @@ import io.r2dbc.spi.RowMetadata;
 import pl.koziolekweb.wrjug.r2dbc.model.Member;
 
 class MemberExtractor implements Extractor<Member> {
+
     @Override
     public Member extract(Row row, RowMetadata rowMetadata) {
         return Member.builder()

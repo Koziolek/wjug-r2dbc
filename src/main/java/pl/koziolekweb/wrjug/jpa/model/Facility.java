@@ -18,7 +18,7 @@ import lombok.Setter;
 @Setter
 public class Facility {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "facid")
     private int facId;
 

@@ -22,7 +22,7 @@ import lombok.Setter;
 public class Booking {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bookid")
     private int bookId;
 

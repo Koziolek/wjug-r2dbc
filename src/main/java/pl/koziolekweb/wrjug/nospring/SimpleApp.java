@@ -13,9 +13,10 @@ import static java.time.LocalDateTime.now;
 
 public class SimpleApp {
 
+    private static final String ALL_MEMBERS = "Select * FROM members";
     private static String INSERT_BOOKING = """
-            INSERT INTO bookings (bookid, facid, memid, starttime, slots)
-             VALUES (NEXTVAL('hibernate_sequence'), $1, $2, $3, $4)
+            INSERT INTO bookings (facid, memid, starttime, slots)
+             VALUES ($1, $2, $3, $4)
             """;
 
     public static void main(String[] args) {
@@ -31,16 +32,15 @@ public class SimpleApp {
         var connectionFactory = ConnectionFactories.get(options);
         var conn = connectionFactory.create();
 
-        var i = Flux.from(conn)
-                .flatMap(c -> Flux.from(
-                                c.createStatement("Select * FROM members").execute()
-                        )
-                )
-                .log()
-                .flatMap(r -> r.map(new MemberExtractor()))
-                .log()
-                .map(Member::getMemId)
-                .reduce(0, Integer::sum).block();
+        var i =
+                Flux.from(conn)
+                        .map(c -> c.createStatement(ALL_MEMBERS))
+                        .flatMap(Statement::execute)
+                        .log()
+                        .flatMap(r -> r.map(new MemberExtractor()))
+                        .log()
+                        .map(Member::getMemId)
+                        .reduce(0, Integer::sum).block();
 
         System.out.println(i);
 
