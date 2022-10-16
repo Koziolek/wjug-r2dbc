@@ -1,10 +1,9 @@
 package pl.koziolekweb.wrjug.r2dbc;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import lombok.RequiredArgsConstructor;
 import pl.koziolekweb.wrjug.r2dbc.model.Member;
 import reactor.core.publisher.Flux;
 
@@ -13,10 +12,11 @@ import reactor.core.publisher.Flux;
 @RequiredArgsConstructor
 class MemberReactiveController {
 
-    private final MemberReactiveRepository memberRepository;
+	private final MemberReactiveRepository memberRepository;
 
-    @GetMapping("")
-    public Flux<Member> members(){
-        return memberRepository.findAll();
-    }
+	@GetMapping("")
+	public Flux<Member> members() {
+		return memberRepository.findAll()
+				.doOnNext(System.out::println);
+	}
 }

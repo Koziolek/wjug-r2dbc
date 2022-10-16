@@ -24,7 +24,6 @@ public class SimpleApp {
                 .option(ConnectionFactoryOptions.HOST, "localhost")
                 .option(ConnectionFactoryOptions.PORT, 15432)
                 .option(ConnectionFactoryOptions.DATABASE, "postgres")
-                .option(ConnectionFactoryOptions.DATABASE, "postgres")
                 .option(ConnectionFactoryOptions.USER, "r2dbc")
                 .option(ConnectionFactoryOptions.PASSWORD, "r2dbc")
                 .option(ConnectionFactoryOptions.DRIVER, "postgresql")

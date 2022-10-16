@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.4</version>
+        <version>2.7.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
@@ -20,14 +20,11 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <spring-framework.version>5.3.9</spring-framework.version>
 
         <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
-
-        <junit>5.6.2</junit>
 
         <!-- Plugin versions -->
         <maven.shade>3.2.2</maven.shade>
@@ -37,6 +34,16 @@
         <maven.surefire>3.0.0-M5</maven.surefire>
         <maven.jar>3.2.0</maven.jar>
         <maven.install>3.0.0-M1</maven.install>
+
+        <!-- Libs versions -->
+
+
+<!--        <spring-framework.version>5.3.22</spring-framework.version>-->
+        <lombok.version>1.18.20</lombok.version>
+        <jfairy.version>0.6.5</jfairy.version>
+        <vavr.version>0.10.4</vavr.version>
+        <hibernate-core.version>5.6.12.Final</hibernate-core.version>
+        <junit>5.9.1</junit>
     </properties>
 
     <repositories>
@@ -53,17 +60,17 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.20</version>
+            <version>${lombok.version}</version>
         </dependency>
         <dependency>
             <groupId>com.devskiller</groupId>
             <artifactId>jfairy</artifactId>
-            <version>0.6.4</version>
+            <version>${jfairy.version}</version>
         </dependency>
         <dependency>
             <groupId>io.vavr</groupId>
             <artifactId>vavr</artifactId>
-            <version>0.10.4</version>
+            <version>${vavr.version}</version>
         </dependency>
 
 
@@ -93,6 +100,7 @@
         <dependency>
             <groupId>io.r2dbc</groupId>
             <artifactId>r2dbc-postgresql</artifactId>
+            <version>1.0.0.M7</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
@@ -104,12 +112,12 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.4.32.Final</version>
+            <version>${hibernate-core.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.4.32.Final</version>
+            <version>${hibernate-core.version}</version>
         </dependency>
 
         <!-- Testing dependencies-->
