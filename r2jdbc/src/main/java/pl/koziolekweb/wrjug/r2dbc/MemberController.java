@@ -7,6 +7,8 @@ import static pl.koziolekweb.wrjug.r2dbc.NotificationTopic.MEMBER_SAVED;
 import java.time.Duration;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -72,12 +74,23 @@ public class MemberController {
 	public Flux<ServerSentEvent<Object>> listenToEvents() {
 
 		return Flux.merge(listenToDeletedItems(), listenToSavedItems())
-				.map(o->ServerSentEvent.builder()
+				.map(o -> ServerSentEvent.builder()
 						.retry(Duration.ofSeconds(4L))
 						.event(o.getClass().getName())
 						.data(o).build()
 				);
 
+	}
+
+	@GetMapping("/unevents")
+	public Mono<ResponseEntity<Void>> unlistenToEvents() {
+		unlistenToDeletedItems();
+		unlistenToSavedItems();
+		return Mono.just(
+				ResponseEntity
+						.status(HttpStatus.I_AM_A_TEAPOT)
+						.body(null)
+		);
 	}
 
 	private Flux<Member> listenToSavedItems() {
@@ -88,6 +101,15 @@ public class MemberController {
 
 		return this.notificationService.listen(MEMBER_DELETED, Member.class)
 				.map(Member::getMemId);
+	}
+
+	private void unlistenToSavedItems() {
+		this.notificationService.unlisten(MEMBER_SAVED);
+	}
+
+	private void unlistenToDeletedItems() {
+
+		this.notificationService.unlisten(MEMBER_DELETED);
 	}
 
 }

@@ -30,3 +30,6 @@ DELETE http://localhost:8080/r2dbc/member/{{new_memId}}
 
 ###
 GET http://localhost:8080/r2dbc/member/events
+
+###
+GET http://localhost:8080/r2dbc/member/unevents

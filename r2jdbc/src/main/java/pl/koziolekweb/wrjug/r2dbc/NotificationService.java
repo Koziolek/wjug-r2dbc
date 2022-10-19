@@ -3,9 +3,9 @@ package pl.koziolekweb.wrjug.r2dbc;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.r2dbc.postgresql.api.PostgresqlConnection;
-import io.r2dbc.spi.Connection;
 import io.r2dbc.spi.ConnectionFactory;
 import io.r2dbc.spi.Wrapped;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
@@ -25,7 +25,7 @@ class NotificationService {
 
 
 	private final ConnectionFactory connectionFactory;
-	private final Set<NotificationTopic> watchedTopics = new HashSet<>();
+	private final Set<NotificationTopic> watchedTopics = Collections.synchronizedSet(new HashSet<>());
 
 	@Qualifier("postgres-event-mapper")
 	private final ObjectMapper objectMapper;
@@ -62,12 +62,7 @@ class NotificationService {
 	public <T> Flux<T> listen(final NotificationTopic topic, final Class<T> clazz) {
 
 		if(!watchedTopics.contains(topic)) {
-			synchronized(watchedTopics) {
-				if(!watchedTopics.contains(topic)) {
-					executeListenStatement(topic);
-					watchedTopics.add(topic);
-				}
-			}
+			executeListenStatement(topic);
 		}
 
 		return getConnection().getNotifications()
@@ -88,22 +83,20 @@ class NotificationService {
 	}
 
 	private void executeListenStatement(final NotificationTopic topic) {
-		getConnection().createStatement(String.format("LISTEN \"%s\"", topic)).execute().subscribe();
+		getConnection().createStatement(String.format("LISTEN \"%s\"", topic)).execute()
+				.doOnComplete(() -> watchedTopics.add(topic))
+				.subscribe();
 	}
 
 	public void unlisten(final NotificationTopic topic) {
-
 		if(watchedTopics.contains(topic)) {
-			synchronized(watchedTopics) {
-				if(watchedTopics.contains(topic)) {
-					executeUnlistenStatement(topic);
-					watchedTopics.remove(topic);
-				}
-			}
+			executeUnlistenStatement(topic);
 		}
 	}
 
 	private void executeUnlistenStatement(final NotificationTopic topic) {
-		getConnection().createStatement(String.format("UNLISTEN \"%s\"", topic)).execute().subscribe();
+		getConnection().createStatement(String.format("UNLISTEN \"%s\"", topic)).execute()
+				.doOnComplete(() -> watchedTopics.remove(topic))
+				.subscribe();
 	}
 }
