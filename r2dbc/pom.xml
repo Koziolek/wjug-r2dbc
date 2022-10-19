@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>pl.koziolekweb.wrjug</groupId>
-    <artifactId>r2dbc</artifactId>
+    <artifactId>r2dbc-spring</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>r2dbc</name>
+    <name>r2dbc-spring</name>
     <description>R2DBC examples</description>
     <properties>
         <java.version>17</java.version>
