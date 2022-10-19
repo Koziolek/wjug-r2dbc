@@ -1,0 +1,35 @@
+###
+GET http://localhost:8080/{{base}}/member/
+
+###
+GET http://localhost:8080/{{base}}/member/recomended/4
+
+###
+POST http://localhost:8080/{{base}}/member/
+Content-Type: application/json
+
+{
+  "address": "Bydgoszcz",
+  "firstName": "Jon",
+  "surname": "Doe",
+  "joinDate": "2022-10-16T16:24:44.875Z",
+  "telephone": "666-555-444",
+  "zipCode": 21114
+}
+
+> {%
+    client.global.set("new_memId", response.body.memId)
+ %}
+
+###
+GET http://localhost:8080/{{base}}/member/{{new_memId}}
+
+
+###
+DELETE http://localhost:8080/{{base}}/member/{{new_memId}}
+
+###
+GET http://localhost:8080/{{base}}/member/events
+
+###
+GET http://localhost:8080/{{base}}/member/unevents
