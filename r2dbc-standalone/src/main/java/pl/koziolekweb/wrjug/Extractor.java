@@ -1,4 +1,4 @@
-package pl.koziolekweb.wrjug.nospring;
+package pl.koziolekweb.wrjug;
 
 import java.util.function.BiFunction;
 
