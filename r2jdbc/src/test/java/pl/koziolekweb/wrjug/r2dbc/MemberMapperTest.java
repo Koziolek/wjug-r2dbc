@@ -1,14 +1,12 @@
 package pl.koziolekweb.wrjug.r2dbc;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
 class MemberMapperTest {
 
-	MemberMapper memberMapper = Mappers.getMapper(MemberMapper.class);
+	R2dbcMemberMapper memberMapper = Mappers.getMapper(R2dbcMemberMapper.class);
 
 	@Test
 	void shouldCopyOnlyNonNullProperties() {

@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
 @Mapper(nullValuePropertyMappingStrategy = IGNORE, componentModel = "spring")
-interface MemberMapper {
+interface R2dbcMemberMapper {
 
 	Member putDtoToEntity(MemberDTO memberDTO, @MappingTarget Member target);
 

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 
 @Repository
-public interface MemberRepository extends R2dbcRepository<Member, Integer> {
+public interface R2dbcMemberRepository extends R2dbcRepository<Member, Integer> {
 	@Query("Select * from members where recommendedby = :id")
 	Flux<Member> recomendedBy(Integer id);
 }

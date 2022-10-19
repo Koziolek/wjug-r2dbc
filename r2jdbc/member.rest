@@ -1,11 +1,11 @@
 ###
-GET http://localhost:8080/r2dbc/member/
+GET http://localhost:8080/{{base}}/member/
 
 ###
-GET http://localhost:8080/r2dbc/member/recomended/4
+GET http://localhost:8080/{{base}}/member/recomended/4
 
 ###
-POST http://localhost:8080/r2dbc/member/
+POST http://localhost:8080/{{base}}/member/
 Content-Type: application/json
 
 {
@@ -22,14 +22,14 @@ Content-Type: application/json
  %}
 
 ###
-GET http://localhost:8080/r2dbc/member/{{new_memId}}
+GET http://localhost:8080/{{base}}/member/{{new_memId}}
 
 
 ###
-DELETE http://localhost:8080/r2dbc/member/{{new_memId}}
+DELETE http://localhost:8080/{{base}}/member/{{new_memId}}
 
 ###
-GET http://localhost:8080/r2dbc/member/events
+GET http://localhost:8080/{{base}}/member/events
 
 ###
-GET http://localhost:8080/r2dbc/member/unevents
+GET http://localhost:8080/{{base}}/member/unevents

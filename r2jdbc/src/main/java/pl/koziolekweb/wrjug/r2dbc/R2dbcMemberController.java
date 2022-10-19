@@ -24,10 +24,10 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/r2dbc/member")
 @RequiredArgsConstructor
-public class MemberController {
+public class R2dbcMemberController {
 
-	private final MemberRepository memberRepository;
-	private final MemberMapper memberMapper;
+	private final R2dbcMemberRepository memberRepository;
+	private final R2dbcMemberMapper memberMapper;
 
 	private final NotificationService notificationService;
 
