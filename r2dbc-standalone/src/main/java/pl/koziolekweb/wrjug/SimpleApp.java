@@ -7,8 +7,8 @@ import io.r2dbc.spi.ConnectionFactories;
 import io.r2dbc.spi.ConnectionFactoryOptions;
 import io.r2dbc.spi.Result;
 import io.r2dbc.spi.Statement;
-import java.util.function.LongToIntFunction;
 import org.mapstruct.factory.Mappers;
+import org.reactivestreams.Publisher;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -47,7 +47,7 @@ public class SimpleApp {
 				.block();
 
 
-		final Object o = Flux.from(conn)
+		Flux.from(conn)
 				.map(
 						c -> {
 							c.beginTransaction();
@@ -63,9 +63,8 @@ public class SimpleApp {
 				).flatMap(Statement::execute)
 				.flatMap(Result::getRowsUpdated)
 				.log("INSERTS: ")
+				.doOnNext(System.out::println)
 				.blockLast();
-
-		System.out.println(o);
 
 		Mono.from(conn).map(Connection::close).subscribe();
 	}
